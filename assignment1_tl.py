@@ -75,15 +75,17 @@ optimizer = optim.Adam(model.fc.parameters(), lr=0.001)
 
 loss_history = []
 accuracy_history = []
+val_loss_history = []
+val_accuracy_history = []
 
-def training(model, train_loader, val_loader, criterion, optimizer, epochs=5):
+def training_evaluation(model, train_loader, val_loader, criterion, optimizer, epochs=10):
     for epoch in range(epochs):
         print(f"\nEpoch {epoch+1}/{epochs}")
         
         model.train()
         train_loss = 0.0
-        correct = 0
-        total = 0
+        train_correct = 0
+        train_total = 0
 
         for inputs, labels in train_loader:
             optimizer.zero_grad()
@@ -94,29 +96,56 @@ def training(model, train_loader, val_loader, criterion, optimizer, epochs=5):
 
             train_loss += loss.item() * inputs.size(0)
             _, predicted = torch.max(outputs, 1)
-            total += labels.size(0)
-            correct += (predicted == labels).sum().item()
+            train_total += labels.size(0)
+            train_correct += (predicted == labels).sum().item()
 
-        acc = correct / total
-        print(f"Train Loss: {train_loss/total:.4f}, Accuracy: {acc:.4f}")
-        loss_history.append(train_loss/total)
+        acc = train_correct / train_total
+        print(f"Train Loss: {train_loss/train_total:.4f}, Accuracy: {acc:.4f}")
+        loss_history.append(train_loss/train_total)
         accuracy_history.append(acc)
+
+        val_loss = 0.0
+        val_correct = 0
+        val_total = 0
+
+        model.eval()
+        val_loss, val_correct, val_total = 0.0, 0, 0
+        with torch.no_grad():
+            for inputs, labels in val_loader:
+                outputs = model(inputs)
+                loss = criterion(outputs, labels)
+
+                val_loss   += loss.item() * inputs.size(0)
+                preds       = outputs.argmax(dim=1)
+                val_total  += labels.size(0)
+                val_correct+= (preds == labels).sum().item()
+
+        avg_val_loss = val_loss / val_total
+        val_acc      = val_correct / val_total
+        print(f" Val Loss: {avg_val_loss:.4f}, Accuracy: {val_acc:.4f}")
+
+        val_loss_history.append(avg_val_loss)
+        val_accuracy_history.append(val_acc)
 
 def evaluation(model, test_loader):
     model.eval()
     all_predictions = []
     all_labels = []
     all_images = []
+
+    val_loss = 0.0
+    val_correct = 0
+    val_total = 0
     
     with torch.no_grad():
         for inputs, labels in test_loader:
             outputs = model(inputs)
             _, predicted = torch.max(outputs, 1)
+            loss = criterion(outputs, labels)
             
             all_predictions.extend(predicted.cpu().numpy())
             all_labels.extend(labels.cpu().numpy())
             all_images.extend(inputs.cpu())
-    
     return np.array(all_predictions), np.array(all_labels), all_images
 
 def denormalize(tensor):
@@ -172,7 +201,7 @@ def save_sample_images(images, true_labels, predictions, num_samples=10):
     else:
         print("No incorrectly classified images found!")
 
-training(model, train_loader, val_loader, criterion, optimizer)
+training_evaluation(model, train_loader, val_loader, criterion, optimizer)
 predictions, true_labels, test_images = evaluation(model, val_loader)
 save_sample_images(test_images, true_labels, predictions)
 
@@ -220,6 +249,29 @@ plt.grid(True)
 
 plt.tight_layout()
 plt.savefig('transfer-learning_files/training_metrics.png')
+
+epochs = range(1, len(val_loss_history) + 1)
+
+plt.figure(figsize=(10, 4))
+
+# Loss grafiği
+plt.subplot(1, 2, 1)
+plt.plot(epochs, val_loss_history, marker='o', label='Validation Loss')
+plt.title('Loss per Epoch')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.grid(True)
+
+# Accuracy grafiği
+plt.subplot(1, 2, 2)
+plt.plot(epochs, val_accuracy_history, marker='o', color='green', label='Validation Accuracy')
+plt.title('Accuracy per Epoch')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.grid(True)
+
+plt.tight_layout()
+plt.savefig('transfer-learning_files/validation_metrics.png')
 
 
 print(f"\nTotal test samples: {len(true_labels)}")
