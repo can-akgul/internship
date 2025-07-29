@@ -63,7 +63,7 @@ model.fc = nn.Linear(num_features, 2)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-def training(model, train_loader, val_loader, criterion, optimizer, epochs):
+def training(model, train_loader, val_loader, criterion, optimizer, epochs=10):
     for epoch in range(epochs):
         print(f"\nEpoch {epoch+1}/{epochs}")
         
@@ -109,12 +109,12 @@ def denormalize(tensor):
     std = torch.tensor([0.229, 0.224, 0.225])
     return tensor * std.view(3, 1, 1) + mean.view(3, 1, 1)
 
-def save_sample_images(images, true_labels, predictions, num_samples=8):
-    correct_mask = (true_labels == predictions)
-    correct_indices = np.where(correct_mask)[0]
+def save_sample_images(images, true_labels, predictions, num_samples=10):
+    correct = (true_labels == predictions)
+    correct_indices = np.where(correct)[0]
     
-    incorrect_mask = (true_labels != predictions)
-    incorrect_indices = np.where(incorrect_mask)[0]
+    incorrect = (true_labels != predictions)
+    incorrect_indices = np.where(incorrect)[0]
     
     class_names = ['Cat', 'Dog']
     
@@ -122,7 +122,7 @@ def save_sample_images(images, true_labels, predictions, num_samples=8):
         plt.figure(figsize=(15, 6))
         plt.suptitle('Correctly Classified Images', fontsize=16)
         
-        num_correct = min(num_samples//2, len(correct_indices))
+        num_correct = num_samples // 2
         for i in range(num_correct):
             idx = correct_indices[i]
             img = denormalize(images[idx])
@@ -140,7 +140,7 @@ def save_sample_images(images, true_labels, predictions, num_samples=8):
         plt.figure(figsize=(15, 6))
         plt.suptitle('Incorrectly Classified Images', fontsize=16)
         
-        num_incorrect = min(num_samples//2, len(incorrect_indices))
+        num_incorrect = num_samples // 2
         for i in range(num_incorrect):
             idx = incorrect_indices[i]
             img = denormalize(images[idx])
@@ -157,7 +157,7 @@ def save_sample_images(images, true_labels, predictions, num_samples=8):
     else:
         print("No incorrectly classified images found!")
 
-training(model, train_loader, val_loader, criterion, optimizer, epochs = 10)
+training(model, train_loader, val_loader, criterion, optimizer)
 predictions, true_labels, test_images = evaluation(model, val_loader)
 save_sample_images(test_images, true_labels, predictions)
 
@@ -174,10 +174,6 @@ print(f"Recall: {recall:.4f}")
 
 f1 = f1_score(true_labels, predictions, average='weighted')
 print(f"F1-Score: {f1:.4f}")
-
-
-
-
 
 matrix = confusion_matrix(true_labels, predictions)
 plt.figure(figsize=(8, 6))
