@@ -169,7 +169,7 @@ def save_sample_images(images, true_labels, predictions, num_samples=10):
             plt.axis('off')
         
         plt.tight_layout()
-        plt.savefig('fine-tuning_files/correctly_classified_images.png')
+        plt.savefig('fine-tuning_results/correctly_classified_images.png')
     
     if len(incorrect_indices) > 0:
         plt.figure(figsize=(15, 6))
@@ -188,7 +188,7 @@ def save_sample_images(images, true_labels, predictions, num_samples=10):
             plt.axis('off')
         
         plt.tight_layout()
-        plt.savefig('fine-tuning_files/incorrectly_classified_images.png')
+        plt.savefig('fine-tuning_results/incorrectly_classified_images.png')
     else:
         print("No incorrectly classified images found!")
 
@@ -216,7 +216,7 @@ sns.heatmap(matrix, annot=True, fmt='d', cmap='Blues', xticklabels=['Cat', 'Dog'
 plt.title('Confusion Matrix')
 plt.ylabel('True Label')
 plt.xlabel('Predicted Label')
-plt.savefig('fine-tuning_files/confusion_matrix.png')
+plt.savefig('fine-tuning_results/confusion_matrix.png')
 
 epochs = range(1, len(loss_history) + 1)
 
@@ -239,7 +239,7 @@ plt.ylabel('Accuracy')
 plt.grid(True)
 
 plt.tight_layout()
-plt.savefig('fine-tuning_files/training_metrics.png')
+plt.savefig('fine-tuning_results/training_metrics.png')
 
 
 epochs = range(1, len(val_loss_history) + 1)
@@ -263,7 +263,8 @@ plt.ylabel('Accuracy')
 plt.grid(True)
 
 plt.tight_layout()
-plt.savefig('fine-tuning_files/validation_metrics.png')
+plt.savefig('fine-tuning_results/validation_metrics.png')
+
 
 print(f"\nTotal test samples: {len(true_labels)}")
 print(f"Correctly classified: {np.sum(true_labels == predictions)}")
