@@ -63,12 +63,14 @@ model.fc = nn.Linear(num_features, 2)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-def training(model, train_loader, val_loader, criterion, optimizer, epochs=5):
+def training(model, train_loader, val_loader, criterion, optimizer, epochs):
     for epoch in range(epochs):
         print(f"\nEpoch {epoch+1}/{epochs}")
         
         model.train()
-        train_loss, correct, total = 0.0, 0, 0
+        train_loss = 0.0
+        correct = 0
+        total = 0
 
         for inputs, labels in train_loader:
             optimizer.zero_grad()
@@ -84,8 +86,6 @@ def training(model, train_loader, val_loader, criterion, optimizer, epochs=5):
 
         acc = correct / total
         print(f"Train Loss: {train_loss/total:.4f}, Accuracy: {acc:.4f}")
-
-training(model, train_loader, val_loader, criterion, optimizer, epochs=25)
 
 def evaluation(model, test_loader):
     model.eval()
@@ -105,7 +105,8 @@ def evaluation(model, test_loader):
     return np.array(all_predictions), np.array(all_labels), all_images
 
 
-predictions, true_labels, test_images = evaluate_model(model, val_loader)
+training(model, train_loader, val_loader, criterion, optimizer, epochs = 10)
+predictions, true_labels, test_images = evaluation(model, val_loader)
 
 accuracy = accuracy_score(true_labels, predictions)
 precision = precision_score(true_labels, predictions, average='binary')
