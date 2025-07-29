@@ -109,9 +109,9 @@ training(model, train_loader, val_loader, criterion, optimizer, epochs = 10)
 predictions, true_labels, test_images = evaluation(model, val_loader)
 
 accuracy = accuracy_score(true_labels, predictions)
-precision = precision_score(true_labels, predictions, average='binary')
-recall = recall_score(true_labels, predictions, average='binary')
-f1 = f1_score(true_labels, predictions, average='binary')
+precision = precision_score(true_labels, predictions, average='weighted')
+recall = recall_score(true_labels, predictions, average='weighted')
+f1 = f1_score(true_labels, predictions, average='weighted')
 
 print(f"\n=== Test Set Evaluation ===")
 print(f"Accuracy: {accuracy:.4f}")
@@ -119,11 +119,9 @@ print(f"Precision: {precision:.4f}")
 print(f"Recall: {recall:.4f}")
 print(f"F1-Score: {f1:.4f}")
 
-cm = confusion_matrix(true_labels, predictions)
+matrix = confusion_matrix(true_labels, predictions)
 plt.figure(figsize=(8, 6))
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 
-            xticklabels=['Cat (3)', 'Dog (5)'], 
-            yticklabels=['Cat (3)', 'Dog (5)'])
+sns.heatmap(matrix, annot=True, fmt='d', cmap='Blues', xticklabels=['Cat', 'Dog'], yticklabels=['Cat', 'Dog'])
 plt.title('Confusion Matrix')
 plt.ylabel('True Label')
 plt.xlabel('Predicted Label')
