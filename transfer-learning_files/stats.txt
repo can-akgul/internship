@@ -1,0 +1,24 @@
+Epoch 1/5
+Train Loss: 0.5955, Accuracy: 0.6713
+
+Epoch 2/5
+Train Loss: 0.5435, Accuracy: 0.7222
+
+Epoch 3/5
+Train Loss: 0.5277, Accuracy: 0.7299
+
+Epoch 4/5
+Train Loss: 0.5247, Accuracy: 0.7352
+
+Epoch 5/5
+Train Loss: 0.5142, Accuracy: 0.7381
+
+=== Test Set Evaluation ===
+Accuracy: 0.7410
+Precision: 0.7461
+Recall: 0.7410
+F1-Score: 0.7397
+
+Total test samples: 2000
+Correctly classified: 1482
+Incorrectly classified: 518

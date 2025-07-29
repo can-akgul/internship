@@ -61,9 +61,12 @@ num_features = model.fc.in_features
 model.fc = nn.Linear(num_features, 2)
 
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+optimizer = optim.Adam(model.parameters(), lr=1e-4)
 
-def training(model, train_loader, val_loader, criterion, optimizer, epochs=10):
+loss_history = []
+accuracy_history = []
+
+def training(model, train_loader, val_loader, criterion, optimizer, epochs=5):
     for epoch in range(epochs):
         print(f"\nEpoch {epoch+1}/{epochs}")
         
@@ -86,6 +89,8 @@ def training(model, train_loader, val_loader, criterion, optimizer, epochs=10):
 
         acc = correct / total
         print(f"Train Loss: {train_loss/total:.4f}, Accuracy: {acc:.4f}")
+        loss_history.append(train_loss/total)
+        accuracy_history.append(acc)
 
 def evaluation(model, test_loader):
     model.eval()
@@ -134,7 +139,7 @@ def save_sample_images(images, true_labels, predictions, num_samples=10):
             plt.axis('off')
         
         plt.tight_layout()
-        plt.savefig('correctly_classified_images.png')
+        plt.savefig('fine-tuning_files/correctly_classified_images.png')
     
     if len(incorrect_indices) > 0:
         plt.figure(figsize=(15, 6))
@@ -153,7 +158,7 @@ def save_sample_images(images, true_labels, predictions, num_samples=10):
             plt.axis('off')
         
         plt.tight_layout()
-        plt.savefig('incorrectly_classified_images.png')
+        plt.savefig('fine-tuning_files/incorrectly_classified_images.png')
     else:
         print("No incorrectly classified images found!")
 
@@ -181,7 +186,30 @@ sns.heatmap(matrix, annot=True, fmt='d', cmap='Blues', xticklabels=['Cat', 'Dog'
 plt.title('Confusion Matrix')
 plt.ylabel('True Label')
 plt.xlabel('Predicted Label')
-plt.savefig('confusion_matrix.png')
+plt.savefig('fine-tuning_files/confusion_matrix.png')
+
+epochs = range(1, len(loss_history) + 1)
+
+plt.figure(figsize=(10, 4))
+
+# Loss grafiği
+plt.subplot(1, 2, 1)
+plt.plot(epochs, loss_history, marker='o', label='Train Loss')
+plt.title('Loss per Epoch')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.grid(True)
+
+# Accuracy grafiği
+plt.subplot(1, 2, 2)
+plt.plot(epochs, accuracy_history, marker='o', color='green', label='Train Accuracy')
+plt.title('Accuracy per Epoch')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.grid(True)
+
+plt.tight_layout()
+plt.savefig('fine-tuning_files/training_metrics.png')
 
 print(f"\nTotal test samples: {len(true_labels)}")
 print(f"Correctly classified: {np.sum(true_labels == predictions)}")
