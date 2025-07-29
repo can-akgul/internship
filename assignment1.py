@@ -104,35 +104,12 @@ def evaluation(model, test_loader):
     
     return np.array(all_predictions), np.array(all_labels), all_images
 
-
-training(model, train_loader, val_loader, criterion, optimizer, epochs = 10)
-predictions, true_labels, test_images = evaluation(model, val_loader)
-
-accuracy = accuracy_score(true_labels, predictions)
-precision = precision_score(true_labels, predictions, average='weighted')
-recall = recall_score(true_labels, predictions, average='weighted')
-f1 = f1_score(true_labels, predictions, average='weighted')
-
-print(f"\n=== Test Set Evaluation ===")
-print(f"Accuracy: {accuracy:.4f}")
-print(f"Precision: {precision:.4f}")
-print(f"Recall: {recall:.4f}")
-print(f"F1-Score: {f1:.4f}")
-
-matrix = confusion_matrix(true_labels, predictions)
-plt.figure(figsize=(8, 6))
-sns.heatmap(matrix, annot=True, fmt='d', cmap='Blues', xticklabels=['Cat', 'Dog'], yticklabels=['Cat', 'Dog'])
-plt.title('Confusion Matrix')
-plt.ylabel('True Label')
-plt.xlabel('Predicted Label')
-plt.savefig('confusion_matrix.png')
-
 def denormalize(tensor):
     mean = torch.tensor([0.485, 0.456, 0.406])
     std = torch.tensor([0.229, 0.224, 0.225])
     return tensor * std.view(3, 1, 1) + mean.view(3, 1, 1)
 
-def show_sample_images(images, true_labels, predictions, num_samples=8):
+def save_sample_images(images, true_labels, predictions, num_samples=8):
     correct_mask = (true_labels == predictions)
     correct_indices = np.where(correct_mask)[0]
     
@@ -180,7 +157,35 @@ def show_sample_images(images, true_labels, predictions, num_samples=8):
     else:
         print("No incorrectly classified images found!")
 
-show_sample_images(test_images, true_labels, predictions)
+training(model, train_loader, val_loader, criterion, optimizer, epochs = 10)
+predictions, true_labels, test_images = evaluation(model, val_loader)
+save_sample_images(test_images, true_labels, predictions)
+
+print(f"\n=== Test Set Evaluation ===")
+
+accuracy = accuracy_score(true_labels, predictions)
+print(f"Accuracy: {accuracy:.4f}")
+
+precision = precision_score(true_labels, predictions, average='weighted')
+print(f"Precision: {precision:.4f}")
+
+recall = recall_score(true_labels, predictions, average='weighted')
+print(f"Recall: {recall:.4f}")
+
+f1 = f1_score(true_labels, predictions, average='weighted')
+print(f"F1-Score: {f1:.4f}")
+
+
+
+
+
+matrix = confusion_matrix(true_labels, predictions)
+plt.figure(figsize=(8, 6))
+sns.heatmap(matrix, annot=True, fmt='d', cmap='Blues', xticklabels=['Cat', 'Dog'], yticklabels=['Cat', 'Dog'])
+plt.title('Confusion Matrix')
+plt.ylabel('True Label')
+plt.xlabel('Predicted Label')
+plt.savefig('confusion_matrix.png')
 
 print(f"\nTotal test samples: {len(true_labels)}")
 print(f"Correctly classified: {np.sum(true_labels == predictions)}")
