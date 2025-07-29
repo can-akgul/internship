@@ -4,6 +4,9 @@ import torch.optim as optim
 from torchvision import datasets, transforms, models
 from torch.utils.data import DataLoader, Subset
 import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
+import seaborn as sns
 
 
 
@@ -60,7 +63,7 @@ model.fc = nn.Linear(num_features, 2)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-def train_model(model, train_loader, val_loader, criterion, optimizer, epochs=5):
+def training(model, train_loader, val_loader, criterion, optimizer, epochs=5):
     for epoch in range(epochs):
         print(f"\nEpoch {epoch+1}/{epochs}")
         
@@ -82,13 +85,9 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, epochs=5)
         acc = correct / total
         print(f"Train Loss: {train_loss/total:.4f}, Accuracy: {acc:.4f}")
 
-train_model(model, train_loader, val_loader, criterion, optimizer, epochs=25)
+training(model, train_loader, val_loader, criterion, optimizer, epochs=25)
 
-import matplotlib.pyplot as plt
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
-import seaborn as sns
-
-def evaluate_model(model, test_loader):
+def evaluation(model, test_loader):
     model.eval()
     all_predictions = []
     all_labels = []
@@ -127,7 +126,6 @@ sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
 plt.title('Confusion Matrix')
 plt.ylabel('True Label')
 plt.xlabel('Predicted Label')
-plt.show()
 plt.savefig('confusion_matrix.png')
 
 def denormalize(tensor):
@@ -160,7 +158,6 @@ def show_sample_images(images, true_labels, predictions, num_samples=8):
             plt.axis('off')
         
         plt.tight_layout()
-        plt.show()
         plt.savefig('correctly_classified_images.png')
     
     if len(incorrect_indices) > 0:
@@ -180,7 +177,6 @@ def show_sample_images(images, true_labels, predictions, num_samples=8):
             plt.axis('off')
         
         plt.tight_layout()
-        plt.show()
         plt.savefig('incorrectly_classified_images.png')
     else:
         print("No incorrectly classified images found!")
