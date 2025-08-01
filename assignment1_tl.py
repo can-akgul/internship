@@ -78,7 +78,7 @@ accuracy_history = []
 val_loss_history = []
 val_accuracy_history = []
 
-def training_evaluation(model, train_loader, val_loader, criterion, optimizer, epochs=100):
+def training_evaluation(model, train_loader, val_loader, criterion, optimizer, epochs=10):
     for epoch in range(epochs):
         print(f"\nEpoch {epoch+1}/{epochs}")
         
