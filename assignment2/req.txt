@@ -1,6 +1,4 @@
 torch
-torchvision
 numpy
-matplotlib
-scikit-learn
-seaborn
+pandas
+transformers
