@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <title>GPT-2 API Arayüzü</title>
+</head>
+<body>
+  <h1>Yapay Zeka ile Yazı Tamamlama</h1>
+  <form method="post" action="/generate">
+    <textarea name="prompt" rows="5" cols="60" placeholder="Bir şeyler yaz..."></textarea><br>
+    <button type="submit">Gönder</button>
+  </form>
+
+  {% if response %}
+    <h2>Modelin Yanıtı:</h2>
+    <p>{{ response }}</p>
+  {% endif %}
+</body>
+</html>
