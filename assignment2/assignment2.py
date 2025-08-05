@@ -1,3 +1,6 @@
+import os
+os.environ["CUDA_LAUNCH_BLOCKING"] = "1"
+
 import torch
 import pandas as pd
 import numpy as np
@@ -119,4 +122,4 @@ for fold, (train_idx, val_idx) in enumerate(skf.split(inputs_ids, y)):
 
         avg_val_loss = val_loss / val_total
         val_acc      = val_correct / val_total
-        print(f" Val Loss: {avg_val_loss:.4f}, Accuracy: {val_acc:.4f}")
+        print(f"Val Loss: {avg_val_loss:.4f}, Accuracy: {val_acc:.4f}")
