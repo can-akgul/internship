@@ -27,7 +27,7 @@ inputs_ids = inputs['input_ids']
 y_array = y.values
 skf = KFold(n_splits=5, shuffle=True, random_state=7)
 
-for fold, (train_idx, val_idx) in enumerate(skf.split(inputs_ids, y)):
+for fold, (train_idx, val_idx) in enumerate(skf.split(inputs_ids, y_array)):
     
     inputs_ids_train = inputs_ids[train_idx]
     inputs_ids_val = inputs_ids[val_idx]
@@ -45,6 +45,7 @@ for fold, (train_idx, val_idx) in enumerate(skf.split(inputs_ids, y)):
 
 
     encoder = AutoModelForSequenceClassification.from_pretrained("distilbert-base-uncased")
+    
 
     for param in encoder.parameters():
         param.requires_grad = False
@@ -57,15 +58,11 @@ for fold, (train_idx, val_idx) in enumerate(skf.split(inputs_ids, y)):
         nn.LogSoftmax(dim=1)
     )
 
-    class_weights = compute_class_weight(
-        class_weight='balanced',
-        classes=np.unique(y),
-        y=y
-    )
+    class_weights = compute_class_weight(class_weight='balanced', classes=np.unique(y_array), y=y_array)
 
     criterion = NLLLoss(weight=torch.tensor(class_weights, dtype=torch.float32))
 
-    optimizer = optim.AdamW(encoder.parameters(), lr=1e-3)
+    optimizer = optim.AdamW(encoder.classifier.parameters(), lr=1e-3)
 
     for epoch in range(5):
 
@@ -110,5 +107,5 @@ for fold, (train_idx, val_idx) in enumerate(skf.split(inputs_ids, y)):
 
         avg_val_loss = val_loss / val_total
         val_acc      = val_correct / val_total
-        print(f" Val Loss: {avg_val_loss:.4f}, Accuracy: {val_acc:.4f}")
+        print(f"Val Loss: {avg_val_loss:.4f}, Accuracy: {val_acc:.4f}")
         
