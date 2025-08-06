@@ -1,47 +1,51 @@
-Fold 1
-Epoch 1 - Avg Train Loss: 0.6828
-Epoch 2 - Avg Train Loss: 0.6734
-Epoch 3 - Avg Train Loss: 0.6665
-Epoch 4 - Avg Train Loss: 0.6646
-Epoch 5 - Avg Train Loss: 0.6634
+Epoch 1 - Avg Train Loss: 0.6840
+Epoch 2 - Avg Train Loss: 0.6731
+Epoch 3 - Avg Train Loss: 0.6702
+Epoch 4 - Avg Train Loss: 0.6663
+Epoch 5 - Avg Train Loss: 0.6615
 
-Fold 1 - Validation Accuracy: 0.6123
+Fold 1 - Validation Accuracy: 0.6152
 
 Fold 2
-Epoch 1 - Avg Train Loss: 0.6862
-Epoch 2 - Avg Train Loss: 0.6699
-Epoch 3 - Avg Train Loss: 0.6667
-Epoch 4 - Avg Train Loss: 0.6646
-Epoch 5 - Avg Train Loss: 0.6616
+Epoch 1 - Avg Train Loss: 0.6840
+Epoch 2 - Avg Train Loss: 0.6702
+Epoch 3 - Avg Train Loss: 0.6639
+Epoch 4 - Avg Train Loss: 0.6628
+Epoch 5 - Avg Train Loss: 0.6590
 
-Fold 2 - Validation Accuracy: 0.5967
+Fold 2 - Validation Accuracy: 0.5552
 
 Fold 3
-Epoch 1 - Avg Train Loss: 0.6810
-Epoch 2 - Avg Train Loss: 0.6687
-Epoch 3 - Avg Train Loss: 0.6656
-Epoch 4 - Avg Train Loss: 0.6611
-Epoch 5 - Avg Train Loss: 0.6622
+Epoch 1 - Avg Train Loss: 0.6827
+Epoch 2 - Avg Train Loss: 0.6696
+Epoch 3 - Avg Train Loss: 0.6652
+Epoch 4 - Avg Train Loss: 0.6618
+Epoch 5 - Avg Train Loss: 0.6610
 
-Fold 3 - Validation Accuracy: 0.5898
+Fold 3 - Validation Accuracy: 0.5811
 
 Fold 4
-Epoch 1 - Avg Train Loss: 0.6824
-Epoch 2 - Avg Train Loss: 0.6698
-Epoch 3 - Avg Train Loss: 0.6639
-Epoch 4 - Avg Train Loss: 0.6621
-Epoch 5 - Avg Train Loss: 0.6598
+Epoch 1 - Avg Train Loss: 0.6851
+Epoch 2 - Avg Train Loss: 0.6715
+Epoch 3 - Avg Train Loss: 0.6682
+Epoch 4 - Avg Train Loss: 0.6634
+Epoch 5 - Avg Train Loss: 0.6608
 
-Fold 4 - Validation Accuracy: 0.6108
+Fold 4 - Validation Accuracy: 0.5493
 
 Fold 5
-Epoch 1 - Avg Train Loss: 0.6844
-Epoch 2 - Avg Train Loss: 0.6695
-Epoch 3 - Avg Train Loss: 0.6683
-Epoch 4 - Avg Train Loss: 0.6654
-Epoch 5 - Avg Train Loss: 0.6614
+Epoch 1 - Avg Train Loss: 0.6834
+Epoch 2 - Avg Train Loss: 0.6717
+Epoch 3 - Avg Train Loss: 0.6678
+Epoch 4 - Avg Train Loss: 0.6646
+Epoch 5 - Avg Train Loss: 0.6590
 
-Fold 5 - Validation Accuracy: 0.6094
+Fold 5 - Validation Accuracy: 0.5234
 
-✅ Mean Validation Accuracy: 0.6038
-📉 Mean Train Loss: 0.6617
+Mean Validation Accuracy: 0.5648
+Mean Train Loss: 0.6603
+Fold 1 - Test Loss: 0.6530, Accuracy: 0.6196
+Fold 2 - Test Loss: 0.6723, Accuracy: 0.5691
+Fold 3 - Test Loss: 0.6520, Accuracy: 0.6267
+Fold 4 - Test Loss: 0.6717, Accuracy: 0.5627
+Fold 5 - Test Loss: 0.7202, Accuracy: 0.5201
