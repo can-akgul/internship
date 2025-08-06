@@ -1,0 +1,39 @@
+Epoch 1/10
+Train Loss: 0.6879, Accuracy: 0.5571
+Val Loss: 0.6792, Accuracy: 0.5469
+
+Epoch 2/10
+Train Loss: 0.6770, Accuracy: 0.5732
+Val Loss: 0.6750, Accuracy: 0.5884
+
+Epoch 3/10
+Train Loss: 0.6743, Accuracy: 0.5770
+Val Loss: 0.6710, Accuracy: 0.5791
+
+Epoch 4/10
+Train Loss: 0.6733, Accuracy: 0.5780
+Val Loss: 0.6744, Accuracy: 0.5923
+
+Epoch 5/10
+Train Loss: 0.6691, Accuracy: 0.5835
+Val Loss: 0.6725, Accuracy: 0.5986
+
+Epoch 6/10
+Train Loss: 0.6728, Accuracy: 0.5808
+Val Loss: 0.6713, Accuracy: 0.5713
+
+Epoch 7/10
+Train Loss: 0.6678, Accuracy: 0.5933
+Val Loss: 0.6684, Accuracy: 0.5894
+
+Epoch 8/10
+Train Loss: 0.6694, Accuracy: 0.5856
+Val Loss: 0.6673, Accuracy: 0.5903
+
+Epoch 9/10
+Train Loss: 0.6683, Accuracy: 0.5874
+Val Loss: 0.6689, Accuracy: 0.5894
+
+Epoch 10/10
+Train Loss: 0.6669, Accuracy: 0.5909
+Val Loss: 0.6690, Accuracy: 0.5981
