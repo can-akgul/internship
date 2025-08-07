@@ -185,3 +185,9 @@ for fold in range(n):
     test_accuracies.append(accuracy)
 
     print(f"Fold {fold+1} - Test Loss: {avg_loss:.4f}, Accuracy: {accuracy:.4f}")
+
+mean_acc = sum(test_accuracies) / len(test_accuracies)
+mean_loss = sum(test_losses) / len(test_losses)
+
+print(f"\nMean Test Accuracy: {mean_acc:.4f}")
+print(f"Mean Test Loss: {mean_loss:.4f}")
