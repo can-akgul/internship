@@ -1,51 +1,76 @@
-Epoch 1 - Avg Train Loss: 0.6840
-Epoch 2 - Avg Train Loss: 0.6731
-Epoch 3 - Avg Train Loss: 0.6702
-Epoch 4 - Avg Train Loss: 0.6663
-Epoch 5 - Avg Train Loss: 0.6615
+Epoch 1 - Avg Train Loss: 0.6873
+Epoch 2 - Avg Train Loss: 0.6710
+Epoch 3 - Avg Train Loss: 0.6660
+Epoch 4 - Avg Train Loss: 0.6670
+Epoch 5 - Avg Train Loss: 0.6619
+Epoch 6 - Avg Train Loss: 0.6613
+Epoch 7 - Avg Train Loss: 0.6603
+Epoch 8 - Avg Train Loss: 0.6576
+Epoch 9 - Avg Train Loss: 0.6528
+Epoch 10 - Avg Train Loss: 0.6548
 
-Fold 1 - Validation Accuracy: 0.6152
+Fold 1 - Validation Accuracy: 0.6201
 
 Fold 2
-Epoch 1 - Avg Train Loss: 0.6840
-Epoch 2 - Avg Train Loss: 0.6702
-Epoch 3 - Avg Train Loss: 0.6639
-Epoch 4 - Avg Train Loss: 0.6628
-Epoch 5 - Avg Train Loss: 0.6590
+Epoch 1 - Avg Train Loss: 0.6841
+Epoch 2 - Avg Train Loss: 0.6693
+Epoch 3 - Avg Train Loss: 0.6657
+Epoch 4 - Avg Train Loss: 0.6625
+Epoch 5 - Avg Train Loss: 0.6594
+Epoch 6 - Avg Train Loss: 0.6563
+Epoch 7 - Avg Train Loss: 0.6571
+Epoch 8 - Avg Train Loss: 0.6529
+Epoch 9 - Avg Train Loss: 0.6526
+Epoch 10 - Avg Train Loss: 0.6480
 
-Fold 2 - Validation Accuracy: 0.5552
+Fold 2 - Validation Accuracy: 0.6182
 
 Fold 3
-Epoch 1 - Avg Train Loss: 0.6827
-Epoch 2 - Avg Train Loss: 0.6696
-Epoch 3 - Avg Train Loss: 0.6652
-Epoch 4 - Avg Train Loss: 0.6618
-Epoch 5 - Avg Train Loss: 0.6610
+Epoch 1 - Avg Train Loss: 0.6842
+Epoch 2 - Avg Train Loss: 0.6682
+Epoch 3 - Avg Train Loss: 0.6642
+Epoch 4 - Avg Train Loss: 0.6609
+Epoch 5 - Avg Train Loss: 0.6595
+Epoch 6 - Avg Train Loss: 0.6580
+Epoch 7 - Avg Train Loss: 0.6545
+Epoch 8 - Avg Train Loss: 0.6540
+Epoch 9 - Avg Train Loss: 0.6519
+Epoch 10 - Avg Train Loss: 0.6510
 
-Fold 3 - Validation Accuracy: 0.5811
+Fold 3 - Validation Accuracy: 0.6113
 
 Fold 4
-Epoch 1 - Avg Train Loss: 0.6851
-Epoch 2 - Avg Train Loss: 0.6715
-Epoch 3 - Avg Train Loss: 0.6682
-Epoch 4 - Avg Train Loss: 0.6634
-Epoch 5 - Avg Train Loss: 0.6608
+Epoch 1 - Avg Train Loss: 0.6829
+Epoch 2 - Avg Train Loss: 0.6699
+Epoch 3 - Avg Train Loss: 0.6646
+Epoch 4 - Avg Train Loss: 0.6616
+Epoch 5 - Avg Train Loss: 0.6592
+Epoch 6 - Avg Train Loss: 0.6586
+Epoch 7 - Avg Train Loss: 0.6548
+Epoch 8 - Avg Train Loss: 0.6528
+Epoch 9 - Avg Train Loss: 0.6533
+Epoch 10 - Avg Train Loss: 0.6505
 
-Fold 4 - Validation Accuracy: 0.5493
+Fold 4 - Validation Accuracy: 0.6089
 
 Fold 5
 Epoch 1 - Avg Train Loss: 0.6834
-Epoch 2 - Avg Train Loss: 0.6717
-Epoch 3 - Avg Train Loss: 0.6678
-Epoch 4 - Avg Train Loss: 0.6646
-Epoch 5 - Avg Train Loss: 0.6590
+Epoch 2 - Avg Train Loss: 0.6709
+Epoch 3 - Avg Train Loss: 0.6667
+Epoch 4 - Avg Train Loss: 0.6658
+Epoch 5 - Avg Train Loss: 0.6645
+Epoch 6 - Avg Train Loss: 0.6595
+Epoch 7 - Avg Train Loss: 0.6561
+Epoch 8 - Avg Train Loss: 0.6574
+Epoch 9 - Avg Train Loss: 0.6526
+Epoch 10 - Avg Train Loss: 0.6529
 
-Fold 5 - Validation Accuracy: 0.5234
+Fold 5 - Validation Accuracy: 0.5825
 
-Mean Validation Accuracy: 0.5648
-Mean Train Loss: 0.6603
-Fold 1 - Test Loss: 0.6530, Accuracy: 0.6196
-Fold 2 - Test Loss: 0.6723, Accuracy: 0.5691
-Fold 3 - Test Loss: 0.6520, Accuracy: 0.6267
-Fold 4 - Test Loss: 0.6717, Accuracy: 0.5627
-Fold 5 - Test Loss: 0.7202, Accuracy: 0.5201
+Mean Validation Accuracy: 0.6082
+Mean Train Loss: 0.6515
+Fold 1 - Test Loss: 0.6537, Accuracy: 0.6306
+Fold 2 - Test Loss: 0.6447, Accuracy: 0.6330
+Fold 3 - Test Loss: 0.6523, Accuracy: 0.6377
+Fold 4 - Test Loss: 0.6558, Accuracy: 0.6338
+Fold 5 - Test Loss: 0.6686, Accuracy: 0.5793
