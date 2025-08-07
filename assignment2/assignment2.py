@@ -1,6 +1,3 @@
-from google.colab  import drive
-drive.mount("drive")
-
 import torch
 import numpy as np
 import pandas as pd
@@ -11,10 +8,12 @@ from transformers import AutoTokenizer, AutoModel
 from sklearn.model_selection import StratifiedKFold
 from sklearn.utils.class_weight import compute_class_weight
 from torch.utils.data import TensorDataset, DataLoader
+
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-train = pd.read_csv("/content/drive/MyDrive/Colab_Notebooks/liar_dataset/train.csv", sep=',', header=None, usecols=[1,2], names=["label", "statement"])
-test = pd.read_csv("/content/drive/MyDrive/Colab_Notebooks/liar_dataset/test.csv", sep=',', header = None, usecols=[1, 2], names=["label", "statement"])
+train = pd.read_csv("/content/sample_data/liar_dataset/train.csv", sep=',', header=None, usecols=[1,2], names=["label", "statement"])
+test = pd.read_csv("/content/sample_data/liar_dataset/test.csv", sep=',', header = None, usecols=[1, 2], names=["label", "statement"])
 
 train['label'] = train['label'].apply(lambda x:1 if x in ["false", "pants-fire", "barely-true"] else 0)
 test['label'] = test['label'].apply(lambda x:1 if x in ["false", "pants-fire", "barely-true"] else 0)
@@ -57,7 +56,7 @@ def create_model():
     return model, classifier
 
 
-epochs = 5
+epochs = 10
 batch_size = 16
 lr = 1e-3
 
@@ -96,12 +95,12 @@ for fold, (train_idx, val_idx) in enumerate(skf.split(input_ids, y_array)):
       total_loss = 0.0
 
       for batch in train_loader:
-        id1_batch, id2_batch, id3_batch = [x.to(device) for x in batch]
+        id1_batch, id2_batch, id3_batch = [b.to(device) for b in batch]
 
         optimizer.zero_grad()
         outputs = encoder(id1_batch, attention_mask=id2_batch)
-        hidden_states = outputs.last_hidden_state[:, 0, :]
-        logits = classifier(hidden_states)
+        sentence = outputs.last_hidden_state[:, 0, :]
+        logits = classifier(sentence)
         loss = criterion(logits, id3_batch)
 
         loss.backward()
@@ -123,9 +122,9 @@ for fold, (train_idx, val_idx) in enumerate(skf.split(input_ids, y_array)):
           id1_batch, id2_batch, id3_batch = [b.to(device) for b in batch]
 
           outputs = encoder(id1_batch, attention_mask=id2_batch)
-          hidden_states = outputs.last_hidden_state[:, 0, :]
+          sentence = outputs.last_hidden_state[:, 0, :]
 
-          logits = classifier(hidden_states)
+          logits = classifier(sentence)
           preds = torch.argmax(logits, dim=1)
           correct += (preds == id3_batch).sum().item()
           total += id3_batch.size(0)
@@ -170,8 +169,9 @@ for fold in range(n):
             input_ids = input_ids.to(device)
             attention_mask = attention_mask.to(device)
             labels = labels.to(device)
-            embeddings = encoder(input_ids=input_ids, attention_mask=attention_mask).last_hidden_state[:, 0]
-            outputs = classifier(embeddings)
+            
+            sentence = encoder(input_ids=input_ids, attention_mask=attention_mask).last_hidden_state[:, 0]
+            outputs = classifier(sentence)
             loss = criterion(outputs, labels)
 
             total_loss += loss.item()
