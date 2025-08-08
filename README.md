@@ -2,7 +2,7 @@
 
 Bu repository, derin öğrenme alanında gerçekleştirilen iki farklı assignment'ı içermektedir: görüntü sınıflandırma (computer vision) ve metin sınıflandırma (NLP) projeleri.
 
-## 📁 Proje Yapısı
+## Proje Yapısı
 
 ```
 internship/
@@ -21,7 +21,7 @@ internship/
 └── README.md            # Bu dosya
 ```
 
-## 🎯 Assignment 1: Görüntü Sınıflandırma (CIFAR-10)
+## Assignment 1: Görüntü Sınıflandırma (CIFAR-10)
 
 ### Proje Açıklaması
 CIFAR-10 veri setinden **kedi (class 3)** ve **köpek (class 5)** sınıflarını kullanarak binary sınıflandırma yapan iki farklı yaklaşım:
@@ -57,10 +57,10 @@ Her iki yaklaşım için şunlar oluşturuldu:
 cd assignment1
 pip install -r req.txt
 python assignment1_ft.py      # Fine-tuning için
-python assignment1_tl.py      # Transfer learning için
+python3 assignment1_tl.py      # Transfer learning için
 ```
 
-## 🎯 Assignment 2: Metin Sınıflandırma (Fake News Detection)
+## Assignment 2: Metin Sınıflandırma (Fake News Detection)
 
 ### Proje Açıklaması
 LIAR veri seti kullanılarak sahte haber tespiti yapan NLP projesi. DistilBERT tabanlı model ile binary sınıflandırma gerçekleştirildi.
@@ -86,7 +86,7 @@ LIAR veri seti kullanılarak sahte haber tespiti yapan NLP projesi. DistilBERT t
 ```bash
 cd assignment2
 pip install -r req.txt
-python assignment2.py
+python3 assignment2.py
 ```
 
 ## 🔍 Karşılaştırma ve Analiz
@@ -115,13 +115,3 @@ python assignment2.py
 - numpy
 - pandas
 - transformers
-
-## 📝 Notlar
-
-- Her iki proje de GPU desteği içeriyor
-- Sonuçlar reproducible için random seed'ler kullanıldı
-- Detaylı metriks ve görselleştirmeler her proje için mevcut
-- Model sonuçları ilgili klasörlerde saklanıyor
-
-## 👤 Geliştirici
-Bu projeler 2025 yılındaki ilk yaz stajı kapsamında derin öğrenme tekniklerini öğrenmek ve uygulamak amacıyla geliştirilmiştir. 
