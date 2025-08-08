@@ -74,3 +74,6 @@ Fold 2 - Test Loss: 0.6447, Accuracy: 0.6330
 Fold 3 - Test Loss: 0.6523, Accuracy: 0.6377
 Fold 4 - Test Loss: 0.6558, Accuracy: 0.6338
 Fold 5 - Test Loss: 0.6686, Accuracy: 0.5793
+
+Mean Test Loss: 0.6550
+Mean Accuracy: 0.6229
