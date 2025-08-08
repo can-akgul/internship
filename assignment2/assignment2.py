@@ -98,7 +98,7 @@ for fold, (train_idx, val_idx) in enumerate(skf.split(input_ids, y_array)):
         id1_batch, id2_batch, id3_batch = [b.to(device) for b in batch]
 
         optimizer.zero_grad()
-        outputs = encoder(id1_batch, attention_mask=id2_batch)
+        outputs = encoder(input_ids=id1_batch, attention_mask=id2_batch)
         sentence = outputs.last_hidden_state[:, 0, :]
         logits = classifier(sentence)
         loss = criterion(logits, id3_batch)
@@ -121,7 +121,7 @@ for fold, (train_idx, val_idx) in enumerate(skf.split(input_ids, y_array)):
       for batch in val_loader:
           id1_batch, id2_batch, id3_batch = [b.to(device) for b in batch]
 
-          outputs = encoder(id1_batch, attention_mask=id2_batch)
+          outputs = encoder(input_ids=id1_batch, attention_mask=id2_batch)
           sentence = outputs.last_hidden_state[:, 0, :]
 
           logits = classifier(sentence)
