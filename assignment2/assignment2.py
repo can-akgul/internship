@@ -8,12 +8,13 @@ from transformers import AutoTokenizer, AutoModel
 from sklearn.model_selection import StratifiedKFold
 from sklearn.utils.class_weight import compute_class_weight
 from torch.utils.data import TensorDataset, DataLoader
+import matplotlib.pyplot as plt
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-train = pd.read_csv("/content/sample_data/liar_dataset/train.csv", sep=',', header=None, usecols=[1,2], names=["label", "statement"])
-test = pd.read_csv("/content/sample_data/liar_dataset/test.csv", sep=',', header = None, usecols=[1, 2], names=["label", "statement"])
+train = pd.read_csv("/content/drive/MyDrive/liar_dataset/train.csv", sep=',', header=None, usecols=[1,2], names=["label", "statement"])
+test = pd.read_csv("/content/drive/MyDrive/liar_dataset/test.csv", sep=',', header = None, usecols=[1, 2], names=["label", "statement"])
 
 train['label'] = train['label'].apply(lambda x:1 if x in ["false", "pants-fire", "barely-true"] else 0)
 test['label'] = test['label'].apply(lambda x:1 if x in ["false", "pants-fire", "barely-true"] else 0)
@@ -98,7 +99,7 @@ for fold, (train_idx, val_idx) in enumerate(skf.split(input_ids, y_array)):
         id1_batch, id2_batch, id3_batch = [b.to(device) for b in batch]
 
         optimizer.zero_grad()
-        outputs = encoder(input_ids=id1_batch, attention_mask=id2_batch)
+        outputs = encoder(id1_batch, attention_mask=id2_batch)
         sentence = outputs.last_hidden_state[:, 0, :]
         logits = classifier(sentence)
         loss = criterion(logits, id3_batch)
@@ -169,7 +170,7 @@ for fold in range(n):
             input_ids = input_ids.to(device)
             attention_mask = attention_mask.to(device)
             labels = labels.to(device)
-            
+
             sentence = encoder(input_ids=input_ids, attention_mask=attention_mask).last_hidden_state[:, 0]
             outputs = classifier(sentence)
             loss = criterion(outputs, labels)
@@ -191,3 +192,38 @@ mean_loss = sum(test_losses) / len(test_losses)
 
 print(f"\nMean Test Accuracy: {mean_acc:.4f}")
 print(f"Mean Test Loss: {mean_loss:.4f}")
+
+
+plt.figure(figsize=(10, 4))
+
+plt.subplot(1, 2, 1)
+plt.plot(train_accuracies, marker='o', label="Train Accuracy")
+plt.title("Train Accuracy")
+plt.xlabel("Epoch")
+plt.ylabel("Accuracy")
+
+plt.subplot(1, 2, 2)
+plt.plot(test_accuracies, marker='o', color='orange', label="Test Accuracy")
+plt.title("Test Accuracy")
+plt.xlabel("Epoch")
+plt.ylabel("Accuracy")
+
+plt.tight_layout()
+plt.savefig("accuracy_results.png")
+
+plt.figure(figsize=(10, 4))
+
+plt.subplot(1, 2, 1)
+plt.plot(train_losses, marker='o', label="Train Loss")
+plt.title("Train Loss")
+plt.xlabel("Epoch")
+plt.ylabel("Loss")
+
+plt.subplot(1, 2, 2)
+plt.plot(test_losses, marker='o', color='orange', label="Test Loss")
+plt.title("Test Loss")
+plt.xlabel("Epoch")
+plt.ylabel("Loss")
+
+plt.tight_layout()
+plt.savefig("loss_results.png")
