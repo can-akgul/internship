@@ -86,6 +86,7 @@ for fold, (train_idx, val_idx) in enumerate(skf.split(input_ids, y_array)):
   classifier.to(device)
 
   optimizer = optim.AdamW(classifier.parameters(), lr=lr)
+
   class_weights = compute_class_weight(class_weight='balanced', classes=np.unique(y_array), y=y_array)
   criterion = nn.NLLLoss(weight=torch.tensor(class_weights, dtype=torch.float32).to(device))
 
@@ -99,7 +100,7 @@ for fold, (train_idx, val_idx) in enumerate(skf.split(input_ids, y_array)):
         id1_batch, id2_batch, id3_batch = [b.to(device) for b in batch]
 
         optimizer.zero_grad()
-        outputs = encoder(id1_batch, attention_mask=id2_batch)
+        outputs = encoder(input_ids=id1_batch, attention_mask=id2_batch)
         sentence = outputs.last_hidden_state[:, 0, :]
         logits = classifier(sentence)
         loss = criterion(logits, id3_batch)
@@ -147,6 +148,7 @@ print(f"Mean Train Loss: {mean_loss:.4f}")
 criterion = nn.NLLLoss()
 test_losses = []
 test_accuracies = []
+
 test_dataset = TensorDataset(test_input_ids, test_attention_mask, torch.tensor(test_w_array, dtype=torch.long))
 test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
@@ -171,9 +173,10 @@ for fold in range(n):
             attention_mask = attention_mask.to(device)
             labels = labels.to(device)
 
-            sentence = encoder(input_ids=input_ids, attention_mask=attention_mask).last_hidden_state[:, 0]
-            outputs = classifier(sentence)
-            loss = criterion(outputs, labels)
+            outputs = encoder(input_ids=input_ids, attention_mask=attention_mask)
+            sentence = outputs.last_hidden_state[:, 0, :]
+            logits = classifier(sentence)
+            loss = criterion(logits, labels)
 
             total_loss += loss.item()
             preds = outputs.argmax(dim=1)
@@ -192,38 +195,3 @@ mean_loss = sum(test_losses) / len(test_losses)
 
 print(f"\nMean Test Accuracy: {mean_acc:.4f}")
 print(f"Mean Test Loss: {mean_loss:.4f}")
-
-
-plt.figure(figsize=(10, 4))
-
-plt.subplot(1, 2, 1)
-plt.plot(fold_accuracies, marker='o', label="Train Accuracy")
-plt.title("Train Accuracy")
-plt.xlabel("Epoch")
-plt.ylabel("Accuracy")
-
-plt.subplot(1, 2, 2)
-plt.plot(test_accuracies, marker='o', color='orange', label="Test Accuracy")
-plt.title("Test Accuracy")
-plt.xlabel("Epoch")
-plt.ylabel("Accuracy")
-
-plt.tight_layout()
-plt.savefig("accuracy_results.png")
-
-plt.figure(figsize=(10, 4))
-
-plt.subplot(1, 2, 1)
-plt.plot(fold_losses, marker='o', label="Train Loss")
-plt.title("Train Loss")
-plt.xlabel("Epoch")
-plt.ylabel("Loss")
-
-plt.subplot(1, 2, 2)
-plt.plot(test_losses, marker='o', color='orange', label="Test Loss")
-plt.title("Test Loss")
-plt.xlabel("Epoch")
-plt.ylabel("Loss")
-
-plt.tight_layout()
-plt.savefig("loss_results.png")
